@@ -1,0 +1,51 @@
+.main-banner-home {
+    background-image: url("file:///E:/FitOutFit/React%20Tasks/ecommerce-website/src/images/download.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+    height: 490px;
+    position: relative;
+    
+    
+  }
+  .main-banner-home h2.h1 {
+    color: var(--primary);
+    letter-spacing: 0;
+    font-size: 3.2rem;
+    line-height: 3.5rem;
+}
+.main-banner-home p {
+  color: var(--primary);
+  letter-spacing: 0;
+  line-height: 0.5rem;
+}
+.font-bold {
+  font-weight: 700;
+}
+.main-banner-home::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: block;
+  background-color: #685f58;
+  opacity: .35;
+  z-index: 1;
+}
+
+
+@media (max-width: 768px) {
+  .banner-text {
+    font-size: 1rem;
+    line-height:0.2 ;
+    text-align: center;
+}
+.main-banner-home h2.h1 {
+  color: var(--primary);
+  letter-spacing: 0;
+  font-size: 2rem;
+  line-height: 2rem;
+}
+}

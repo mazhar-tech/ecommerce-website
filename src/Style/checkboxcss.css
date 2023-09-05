@@ -1,0 +1,19 @@
+.checkbox-label{
+    align-items: center;
+    margin-bottom: 8px;
+}
+.checkbox-input{
+    transform: scale(1.5);
+    border: 2px solid #ccc;
+    margin-right: 15px;
+    background-color: black;
+
+}
+.brand-checkbox{
+    align-items: center;
+    margin-bottom: 8px;
+    transform: scale(1.5);
+    border: 2px solid #ccc;
+    margin-right: 15px;
+    background-color: black;
+}
