@@ -1,0 +1,15 @@
+/* Add mobile filter button styling */
+.mobile-filter-button {
+    display: block;
+    margin: 10px auto;
+  }
+  
+  /* Style for the menu when it's closed */
+  .menu-closed {
+    display: none;
+  }
+  
+  /* Style for the menu when it's open */
+  .menu-open {
+    display: block;
+  }

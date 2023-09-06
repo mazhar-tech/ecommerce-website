@@ -4,6 +4,7 @@ import RangeSlider from "react-bootstrap-range-slider";
 import SizeCheckboxGroup from "../Components/SizePicker";
 import Checkbox from "../Components/CheckBox";
 import ProductCollection from "../Components/ProductCollection";
+import "../Style/ProductPage.css";
 
 const ProductPage = () => {
   const { data } = useLocation().state;
@@ -12,6 +13,7 @@ const ProductPage = () => {
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [filteredData, setFilteredData] = useState(data);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     setFilteredData(data);
@@ -23,24 +25,36 @@ const ProductPage = () => {
     } else {
       const newData = data.filter(
         (item) =>
-          selectedColors.includes(item.color) || selectedSizes.includes(item.size)
+          selectedColors.includes(item.color) ||
+          selectedSizes.includes(item.size)
       );
       setFilteredData(newData);
     }
   }, [selectedColors, selectedSizes]);
 
+  // Filter data based on search query
+
   useEffect(() => {
     // Filter data based on search query
-    if (searchQuery.trim() === "") {
+
+    if (searchQuery === "") {
       // If the search query is empty, show all data
       setFilteredData(data);
     } else {
-      const newData = data.filter((item) =>
-        item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      const newData = data.filter(
+        (item) =>
+          (item.color &&
+            item.color.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (item.size &&
+            item.size.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (item.title &&
+            item.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (item.price &&
+            item.price.toString().match(new RegExp(searchQuery, "i")))
       );
       setFilteredData(newData);
     }
-  }, [searchQuery, data]);
+  }, [searchQuery]);
 
   const handleColorChange = (color) => {
     if (selectedColors.includes(color)) {
@@ -87,70 +101,94 @@ const ProductPage = () => {
           <h1></h1>
         </div>
         <div className="row">
-          <div className="col-lg-3">
-            <div className="my-4">
-              <b>SHOP BY</b>
-            </div>
-            <div>
-              <div className="">Price</div>
-              <RangeSlider
-                value={value}
-                min={169}
-                max={802}
-                onChange={(changeEvent) =>
-                  setValue(changeEvent.target.value)
-                }
-              />
-            </div>
-            <div className="my-4">
-              <div>COLOR</div>
-              <hr />
-            </div>
-            <div className="flex-column d-flex">
-              {colorOptions.map((option) => (
-                <Checkbox
-                  key={option.value}
-                  label={option.label}
-                  checked={selectedColors.includes(option.value)}
-                  onChange={() => handleColorChange(option.value)}
-                />
-              ))}
-            </div>
-            <div className="my-4">
-              <div>SIZE</div>
-              <hr />
-            </div>
-            <div>
-              <SizeCheckboxGroup
-                selectedSizes={selectedSizes}
-                onSizeChange={handleSizeChange}
-              />
-            </div>
-            <div className="my-4">
-              <div>BRAND</div>
-              <hr />
-              <div>
-                <input className="brand-checkbox" type="checkbox" name="" id="" />
-                Converse
+          <div className="col-lg-3 col-xl-3 col-xs-3 col-sm-3">
+            <button
+              className="btn btn-outline-secondary col-lg-6 mobile-filter-button my-3"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? "Hide Filters" : "Show Filters"}
+            </button>
+            <div
+              className={`container ${menuOpen ? "menu-open" : "menu-closed"}`}
+            >
+              <div className="my-4">
+                <b>SHOP BY</b>
               </div>
               <div>
-                <input className="brand-checkbox" type="checkbox" name="" id="" />
-                Nike
+                <div className="">Price</div>
+                <RangeSlider
+                  value={value}
+                  min={169}
+                  max={802}
+                  onChange={(changeEvent) => setValue(changeEvent.target.value)}
+                />
+              </div>
+              <div className="my-4">
+                <div>COLOR</div>
+                <hr />
+              </div>
+              <div className="flex-column d-flex">
+                {colorOptions.map((option) => (
+                  <Checkbox
+                    key={option.value}
+                    label={option.label}
+                    checked={selectedColors.includes(option.value)}
+                    onChange={() => handleColorChange(option.value)}
+                  />
+                ))}
+              </div>
+              <div className="my-4">
+                <div>SIZE</div>
+                <hr />
+              </div>
+              <div>
+                <SizeCheckboxGroup
+                  selectedSizes={selectedSizes}
+                  onSizeChange={handleSizeChange}
+                />
+              </div>
+              <div className="my-4">
+                <div>BRAND</div>
+                <hr />
+                <div>
+                  <input
+                    className="brand-checkbox"
+                    type="checkbox"
+                    name=""
+                    id=""
+                  />
+                  Converse
+                </div>
+                <div>
+                  <input
+                    className="brand-checkbox"
+                    type="checkbox"
+                    name=""
+                    id=""
+                  />
+                  Nike
+                </div>
               </div>
             </div>
           </div>
           <div className=" row col-lg-9 col-xl-9 col-xs-9 col-sm-9 ">
             <div className="container">
-              <div className="col-lg-13 col-xl-3col-xs-3 col-sm-3 mx-3  my-3">
-                <input type="search"
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+              <div className="row  mx-3 ">
+                <div className="col-lg-12 col-xl-12 col-xs-12 col-sm-12  my-3">
+                  <div className="">
+                    <input
+                      type="search"
+                      className="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Search "
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                </div>
               </div>
+
               <ProductCollection data={filteredData} />
             </div>
             {/* <div className="col-lg-3 col-xl-3 col-xs-3 col-sm-3  my-2">
