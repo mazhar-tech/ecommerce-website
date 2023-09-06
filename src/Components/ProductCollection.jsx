@@ -20,7 +20,7 @@ const FeatureProduct = ({data}) => {
     <div className="container">
       <div className="row">
         {data.map(item => (
-          <div key={item.id} className="col-md-4 col-sm-6 col-xs-6 mb-4">
+          <div key={item.id} className="col-md-4 col-sm-6 col-xs-6 p-1">
             <div className="card border-0">
               <div className="bg-light" style={{ padding: '10px' }}>
                 <img
